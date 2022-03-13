@@ -43,3 +43,5 @@ INSERT INTO tasks (user_id, content) VALUES (1, "青ブタを100周する")
 # 開発手順メモ
 
 1. 必要なライブラリをインストール && ディレクトリを整理
+2. 基本的な todo 機能を実装
+3. 2 で作成した todo 機能に DB を絡める

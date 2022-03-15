@@ -33,4 +33,7 @@ router.post('/', async (req, res) => {
   }
 });
 
+/** "/"以下のルーティング */
+router.use('/signup', require('./signup'));
+
 module.exports = router;

@@ -1,0 +1,10 @@
+<% if (typeof errorMessage === 'undefined') { var errorMessage = []; } %>
+<% if(errorMessage.length != 0){ %>
+  <div>
+    <strong>Warning!</strong>
+  </div>
+  <div>
+      <span style="color: red;"><%= errorMessage %></span>
+  </div>
+  <br>
+<% } %>

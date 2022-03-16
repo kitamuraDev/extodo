@@ -20,11 +20,11 @@ router.post('/', async (req, res) => {
   const repassword = req.body.repassword;
 
   try {
-    const getUserResult = await getAllData(
+    const result = await getAllData(
       `SELECT * FROM users WHERE name = "${username}"`,
       db,
     );
-    if (getUserResult.length !== 0) {
+    if (result.length !== 0) {
       res.render('signup', {
         title: 'Sign up',
         errorMessage: 'このユーザー名は既に使われています',

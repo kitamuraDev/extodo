@@ -5,7 +5,7 @@ const dbPath = 'db/extodo.sqlite3';
 const getAllData = require('../store/getAllData');
 
 /** get signin page */
-router.get('/', function (req, res) {
+router.get('/', (req, res) => {
   res.render('signin', {
     title: 'Sign in',
   });

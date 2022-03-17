@@ -46,3 +46,4 @@ INSERT INTO tasks (user_id, content) VALUES (1, "青ブタを100周する")
 2. 基本的な todo 機能を実装
 3. 2 で作成した todo 機能に DB を絡める
 4. 基本的な todo 機能が実装できたところで、ユーザー機能(signup, signin, logout)を追加
+5. DB にパスワードを保存する際にハッシュ化（加工）してから DB に突っ込む（※本来は 4 で行う）

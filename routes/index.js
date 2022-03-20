@@ -8,27 +8,46 @@ const run = require('../store/run');
 /* get top page */
 router.get('/', async (req, res) => {
   const db = new sqlite3.Database(dbPath);
-  const userId = req.session.userid;
-  const isAuth = Boolean(userId);
+  const isAuth = req.isAuthenticated();
 
-  try {
-    const todos = await getAllData('SELECT * FROM tasks', db);
+  if (isAuth) {
+    const userId = req.user[0].id;
+    try {
+      const todos = await getAllData(
+        `SELECT * FROM tasks WHERE user_id = ${userId}`,
+        db,
+      );
+      res.render('index', {
+        title: 'ExTodo',
+        todos: todos,
+        isAuth: isAuth,
+      });
+    } catch (e) {
+      console.error(e);
+      res.render('index', {
+        title: 'ExTodo',
+        isAuth: isAuth,
+        errorMessage: e,
+      });
+    }
+  } else {
     res.render('index', {
       title: 'ExTodo',
-      todos: todos,
       isAuth: isAuth,
     });
-  } catch (e) {
-    console.error(e);
   }
 });
 
 /** post input todo content */
 router.post('/', async (req, res) => {
-  const db = new sqlite3.Database(dbPath);
+  /**
+   * - userはpassport.jsのdeserializeUser()で作成されたオブジェクト
+   * - findByIdの結果（ユーザー情報）が格納されている
+   */
+  const userId = req.user[0].id;
   const todo = req.body.add;
-  const userId = req.session.userid;
-  const isAuth = Boolean(userId);
+  const db = new sqlite3.Database(dbPath);
+  const isAuth = req.isAuthenticated();
 
   try {
     await run(
@@ -41,6 +60,7 @@ router.post('/', async (req, res) => {
     res.render('index', {
       title: 'ExTodo',
       isAuth: isAuth,
+      errorMessage: e,
     });
   }
 });

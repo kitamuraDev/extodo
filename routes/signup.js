@@ -7,17 +7,18 @@ const run = require('../store/run');
 const bcrypt = require('bcrypt');
 
 /** get /signup page */
-router.get('/', (_req, res) => {
+router.get('/', (req, res) => {
+  const isAuth = req.isAuthenticated();
   res.render('signup', {
     title: 'Sign up',
+    isAuth: isAuth,
   });
 });
 
 /** post form data (create user) */
 router.post('/', async (req, res) => {
   const db = new sqlite3.Database(dbPath);
-  const userId = req.session.userid;
-  const isAuth = Boolean(userId);
+  const isAuth = req.isAuthenticated();
   const username = req.body.username;
   const password = req.body.password;
   const repassword = req.body.repassword;

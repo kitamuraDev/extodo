@@ -12,6 +12,7 @@ router.get('/', async (req, res) => {
 
   if (isAuth) {
     const userId = req.user[0].id;
+    const userName = req.user[0].name;
     try {
       const todos = await getAllData(
         `SELECT * FROM tasks WHERE user_id = ${userId}`,
@@ -19,6 +20,7 @@ router.get('/', async (req, res) => {
       );
       res.render('index', {
         title: 'ExTodo',
+        userName: userName,
         todos: todos,
         isAuth: isAuth,
       });

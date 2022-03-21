@@ -7,7 +7,7 @@ a {
   color: #00B7FF;
 }
 
-.completed_btn {
+.base_button {
   border: none;
   cursor: pointer;
   margin-right: 8px;

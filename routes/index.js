@@ -67,7 +67,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-/** post todo id */
+/** delete todo (post id) */
 router.post('/del', async (req, res) => {
   const db = new sqlite3.Database(dbPath);
   const isAuth = req.isAuthenticated();
@@ -75,6 +75,29 @@ router.post('/del', async (req, res) => {
 
   try {
     await run(`DELETE FROM tasks WHERE id = ${todo_id}`, db);
+    res.redirect('/');
+  } catch (e) {
+    console.error(e);
+    res.render('index', {
+      title: 'ExTodo',
+      isAuth: isAuth,
+      errorMessage: e,
+    });
+  }
+});
+
+/** put todo (post id, content) */
+router.post('/edit', async (req, res) => {
+  const db = new sqlite3.Database(dbPath);
+  const isAuth = req.isAuthenticated();
+  const todo_id = req.body.update_todo_id;
+  const todo_content = req.body.update_todo_content;
+
+  try {
+    await run(
+      `UPDATE tasks SET content="${todo_content}" WHERE id = ${todo_id}`,
+      db,
+    );
     res.redirect('/');
   } catch (e) {
     console.error(e);

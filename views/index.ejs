@@ -16,15 +16,24 @@
   <form action="/" method="post">
     <label>タスクの追加</label>
     <input required type="text" name="add" placeholder="何をする？">
-    <input type="submit" value="追加">
+    <input type="submit" value="追加" style="cursor: pointer; border: none;">
   </form>
   <ul>
     <% for(let todo of todos) { %>
-      <li style="margin-bottom: 8px;">
-        <form action="/del" method="post" style="display: inline;">
-          <button type="submit" name="id" class="completed_btn" value="<%= todo.id %>">完了</button>
-        </form>
-        <span><%= todo.content %></span>
+      <li style="margin-bottom: 24px;">
+        <div style="margin-bottom: 8px;">
+          <form action="/del" method="post" style="display: inline;">
+            <button type="submit" name="id" class="base_button" value="<%= todo.id %>">完了</button>
+          </form>
+          <span><%= todo.content %></span>
+        </div>
+        <div>
+          <form action="/edit" method="post">
+            <input type="hidden" name="update_todo_id" value="<%= todo.id %>">
+            <input required type="text" name="update_todo_content" value="<%= todo.content %>">
+            <input type="submit" value="変更" style="cursor: pointer; border: none;">
+          </form>
+        </div>
       </li>
     <% } %>
   </ul>

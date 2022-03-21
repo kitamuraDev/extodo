@@ -67,6 +67,25 @@ router.post('/', async (req, res) => {
   }
 });
 
+/** post todo id */
+router.post('/del', async (req, res) => {
+  const db = new sqlite3.Database(dbPath);
+  const isAuth = req.isAuthenticated();
+  const todo_id = req.body.id;
+
+  try {
+    await run(`DELETE FROM tasks WHERE id = ${todo_id}`, db);
+    res.redirect('/');
+  } catch (e) {
+    console.error(e);
+    res.render('index', {
+      title: 'ExTodo',
+      isAuth: isAuth,
+      errorMessage: e,
+    });
+  }
+});
+
 /** "/"以下のルーティング */
 router.use('/signup', require('./signup'));
 router.use('/signin', require('./signin'));

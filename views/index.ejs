@@ -20,7 +20,12 @@
   </form>
   <ul>
     <% for(let todo of todos) { %>
-      <li><span><%= todo.content %></span></li>
+      <li style="margin-bottom: 8px;">
+        <form action="/del" method="post" style="display: inline;">
+          <button type="submit" name="id" class="completed_btn" value="<%= todo.id %>">完了</button>
+        </form>
+        <span><%= todo.content %></span>
+      </li>
     <% } %>
   </ul>
   <br>
